@@ -8,36 +8,92 @@
 		rel="stylesheet"
 		href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
 	>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Lora:ital,wght@0,400..700;1,400..700&display=fallback"
+	rel="stylesheet"
+	>
 	<style>
 		:root {
 			--transition: .3s;
 			--pico-icon-chevron: url("assets/v.svg");
 			/* --pico-icon-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(136, 145, 164)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") */
 			--left-pad: 4.5vw;
-			--pico-h1-color: black;
+			/* --pico-h1-color: black; */
 			--pico-h2-color: black;
+			--mobile-breakpoint: 550px;
+			--tablet-breakpoint: 1100px;
+			--laptop-breakpoint: 1500px;
 		}
 
-		h1 {
-			font-size: clamp(16px, calc(20px + (36–20) * (100vw - 768px)/(1920–768)), 48px);
+		/* Box sizing rules */
+		*,
+		*::before,
+		*::after {
+			box-sizing: border-box;
 		}
+
+		/* Prevent font size inflation */
+		html {
+			-moz-text-size-adjust: none;
+			-webkit-text-size-adjust: none;
+			text-size-adjust: none;
+		}
+
+		/* Remove default margin in favour of better control in authored CSS */
+		body, h1, h2, h3, h4, p,
+		figure, blockquote, dl, dd {
+			margin-block-end: 0;
+		}	
+
+		/* Inherit fonts for inputs and buttons */
+		input,
+		button,
+		textarea,
+		select {
+			font-family: inherit;
+			font-size: inherit;
+		}
+
+		/* Self-hosted variable fonts*/
+		@font-face {
+			font-family: 'Lora', serif;
+			src: url('/fonts/Lora/0QIvMX1D_JOuMwr7Iw.woff2') format('woff2');
+			font-weight: 400 700;
+			font-style: normal;
+			font-display: fallback;
+		}
+
+		@font-face {
+			font-family: 'Lora', serif;
+			src: url('/fonts/Lora/0QIhMX1D_JOuMw_LIftL.woff2') format('woff2');
+			font-weight: 400 700;
+			font-style: italic;
+			font-display: fallback;
+		}
+
 		.logo-container, .fixed {
 			height: 100vh;
 		}
+
     .fixed {
       position: fixed;
     }
+
 		.center {
 			width: 100%;
 			padding: 7.5vw;
 			position: relative;
 			top: 50%;
 			margin: 0 auto;
-			margin-top: -50%;
+			margin-block-start: -50%;
 		}
+
 		.content {
-			margin-top: 5em;
+			margin-block-start: 5em;
 		}
+		
 		.h1-bg {
 			width: 100%;
 			/* height: 5em; */
@@ -46,21 +102,49 @@
 			align-items: center;
 			vertical-align: middle;
 		}
+
 		h1, h2, h3 {
 			/* display: inline-block; */
 			text-transform: uppercase;
-			font-family:'Times New Roman', Times, serif;
+			font-family: 'Lora', serif;
 			font-weight: 100;
 			color: black;
-			padding: 0.25em 0;
-			padding-left: var(--left-pad);
+			padding: 0.25em;
+			padding-inline-start: var(--left-pad);
 			margin: 0;
 		}
+
 		h1 {
 			margin: 0;
-			margin-right: 1rem;
-			font-size: 3em;
+			text-wrap: nowrap;
+			font-family: 'Lora', serif;
+			margin-inline-end: 1rem;
 			color: white;
+			font-weight: 400;
+
+			font-size: clamp(
+				2.1rem,
+				12vw - 4.5rem,
+				3rem
+			);
+		}
+
+		@media (max-width: 550px) {
+			details {
+				width: 100vw;
+			}
+		}
+
+		@media (max-width: 1500px) {
+			details {
+				width: 90%;
+			}
+		}
+
+		.inner p {
+			font-family: 'Cinzel Decorative', serif;
+			font-weight: 400;
+			font-style: normal;
 		}
 
 		/* https://stackoverflow.com/a/77889050 */
@@ -80,47 +164,98 @@
 			}
 		}
 
+		/*
 		.inner {
 			min-height: 0;
 		}
+		*/
+
+		.inner > details {
+			padding-inline-start: var(--left-pad);
+			font-family: 'Lora', serif;
+			font-weight: 400;
+			border: 2px solid rebeccapurple;
+		}
+
+		details > summary {
+			font-size: clamp(
+				1rem,
+				12vw - 4.5rem,
+				2rem
+			);
+		}
+
+		details[name="sub-labels"] > summary + summary::after {
+			text-transform: uppercase;
+			font-family: 'Lora', serif;
+			font-weight: 100;
+			color: black;
+			/*
+			padding: 0.25em;
+			padding-inline-start: var(--left-pad);
+			*/
+			margin: 0;
+		}
+
+		details[name="sub-labels"] > .outer > .inner {
+			display: grid;
+		}
 
 		details summary {
-			transition-property: margin-bottom, color !important;
+			transition-property: margin-block-end, color !important;
+			line-height: revert;
 		}
+		
+		/*
 		.outer {
 			display: grid;
 			grid-template-rows: 0fr;
 			overflow: hidden;
 			transition: grid-template-rows var(--transition);
 		}
+		*/
 
 		.open > .outer {
 			grid-template-rows: 1fr;
 		}
 
+		/*
 		.inner {
 			min-height: 0;
 		}
+		*/
 
 		details:has(summary) {
 			margin: 0;
 		}
 
+		/*
 		details summary {
-			transition-property: margin-bottom !important;
+			transition-property: margin-block-end !important;
 		}
+		*/
 
 		summary:hover, details.open summary {
 			background-color: black;
+			
 		}
 		summary:hover, summary:hover h2, 
 		details.open summary, details.open summary h2 {
 			color: white !important;
 		}
+
+		details::details-content {
+			margin-inline-start: var(--left-pad);
+		}
+		
+		/*
 		details summary::after {
 			position: absolute;
 			top: 0;
 		}
+		*/
+		
+		/*
 		summary:hover h2::after, details.open summary h2::after {
 			display: block;
 			--chevron-size: var(--pico-font-size);
@@ -143,19 +278,17 @@
 		summary {
 			position: relative;
 		}
-		
-		details {
-			width: 90%;
-		}
+		*/
+
 		p {
 			padding-left: 1em;
 		}
-    footer.mobile-footer {
+
+		footer.mobile-footer {
       display: none;
     }
     
-		/* @media (max-width: 1230px) { */
-		@media (max-width: 768px) {
+		@media (max-width: 550px) {
 			:root {
 				--footer-height: 5rem;
 			}
@@ -211,19 +344,37 @@
 					</summary>
 					<div class="outer">
 						<div class="inner">
-							<p>
-								The name "Superior" originates from the first letter of our founder’s 
-								name, Seren, and represents its literal meaning—a company that strives 
-								for excellence, setting high standards in commerce, services, and 
-								innovation. However, while we are labeled as Superior, we remain humble, 
-								always remembering that no matter how high we soar, we must keep our 
-								feet grounded.
-							</p>
-							<p>At Superior Labels, we provide exceptional trade, services, and 
-								opportunities, ensuring that our growth also uplifts the community. 
-								We believe in breaking norms, creating opportunities, and supporting 
-								others in their ambitions.
-							</p>
+							<details name="rblaw">
+								<summary>
+									<h2>R&B Law Authorities</h2>
+								</summary>
+								<p>
+									R&B Law Authorities – The official legal team of Superior Labels.
+									A functioning law firm co-owned by Rice and Brawly,
+									providing legal services both in-lore and in practical gameplay situations.
+								</p>
+							</details>
+							<details name="hiraya">
+								<summary>
+									<h2>Hiraya Labs</h2>
+								</summary>
+								<p>
+									Hiraya Labs – A sub-label dedicated to innovation and automation.
+									Specializes in selling auto-farm goods, helping streamline community
+									farming operations with reliable, efficient tools.
+								</p>
+							</details>
+							<details name="sari-sari">
+								<summary>
+									<h2>Seren Sari-Sari Store</h2>
+								</summary>
+								<p>
+									Seren Sari-Sari Store – A versatile general store owned by Superior Labels,
+									offering a wide range of high-quality kits and assorted goods.
+									Inspired by the Filipino sari-sari concept, it’s your one-stop shop for
+									everything essential and unexpected.
+								</p>
+							</details>
 						</div>
 					</div>
 				</details>
@@ -234,17 +385,16 @@
 					<div class="outer">
 						<div class="inner">
 							<p>
-								The name "Superior" originates from the first letter of our founder’s 
-								name, Seren, and represents its literal meaning—a company that strives 
-								for excellence, setting high standards in commerce, services, and 
-								innovation. However, while we are labeled as Superior, we remain humble, 
-								always remembering that no matter how high we soar, we must keep our 
-								feet grounded.
+								<b>Pioneering</b> - We challenge norms, take bold risks, and redefine what's 
+								possible in the Minecraft realm business.
 							</p>
-							<p>At Superior Labels, we provide exceptional trade, services, and 
-								opportunities, ensuring that our growth also uplifts the community. 
-								We believe in breaking norms, creating opportunities, and supporting 
-								others in their ambitions.
+							<p>
+								<b>Synergy</b> - We actively seek opportunities to collaborate with like-minded companies
+								and businesses, creating greater value through combined efforts and shared goals.
+							</p>
+							<p>
+								<b>Serendipity</b> - Embracing unexpected opportunities, turning
+								chance encounters into meaningful success.
 							</p>
 						</div>
 					</div>
@@ -263,7 +413,8 @@
 								always remembering that no matter how high we soar, we must keep our 
 								feet grounded.
 							</p>
-							<p>At Superior Labels, we provide exceptional trade, services, and 
+							<p>
+								At Superior Labels, we provide exceptional trade, services, and 
 								opportunities, ensuring that our growth also uplifts the community. 
 								We believe in breaking norms, creating opportunities, and supporting 
 								others in their ambitions.
@@ -286,7 +437,7 @@
 	</body>
 	<script>
 		// https://stackoverflow.com/a/77889050
-
+		/*
 		let openEl = null
     unstickTimer = null
 		function closeEl(el) {
@@ -356,6 +507,8 @@
         }
         el.open = false
       }, TRANSITION*2 * 1000)
-    }, TRANSITION*2 * 1000); // > --transition
+    }, TRANSITION*2 * 1000);
+		*/
+		// > --transition
 	</script>
 </html>
