@@ -93,7 +93,7 @@
 		.content {
 			margin-block-start: 5em;
 		}
-		
+
 		.h1-bg {
 			width: 100%;
 			/* height: 5em; */
@@ -113,11 +113,9 @@
 			padding-inline-start: var(--left-pad);
 			margin: 0;
 		}
-
 		h1 {
 			margin: 0;
 			text-wrap: nowrap;
-			font-family: 'Lora', serif;
 			margin-inline-end: 1rem;
 			color: white;
 			font-weight: 400;
@@ -132,12 +130,6 @@
 		@media (max-width: 550px) {
 			details {
 				width: 100vw;
-			}
-		}
-
-		@media (max-width: 1500px) {
-			details {
-				width: 90%;
 			}
 		}
 
@@ -163,19 +155,10 @@
 				grid-template-rows: 0fr;
 			}
 		}
-
-		/*
+		/* 
 		.inner {
 			min-height: 0;
-		}
-		*/
-
-		.inner > details {
-			padding-inline-start: var(--left-pad);
-			font-family: 'Lora', serif;
-			font-weight: 400;
-			border: 2px solid rebeccapurple;
-		}
+		} */
 
 		details > summary {
 			font-size: clamp(
@@ -185,78 +168,60 @@
 			);
 		}
 
-		details[name="sub-labels"] > summary + summary::after {
-			text-transform: uppercase;
-			font-family: 'Lora', serif;
-			font-weight: 100;
-			color: black;
-			/*
-			padding: 0.25em;
-			padding-inline-start: var(--left-pad);
-			*/
-			margin: 0;
-		}
-
-		details[name="sub-labels"] > .outer > .inner {
-			display: grid;
-		}
-
 		details summary {
 			transition-property: margin-block-end, color !important;
 			line-height: revert;
 		}
-		
-		/*
+
 		.outer {
 			display: grid;
 			grid-template-rows: 0fr;
 			overflow: hidden;
 			transition: grid-template-rows var(--transition);
 		}
-		*/
 
 		.open > .outer {
 			grid-template-rows: 1fr;
 		}
 
-		/*
 		.inner {
 			min-height: 0;
 		}
-		*/
 
 		details:has(summary) {
 			margin: 0;
 		}
 
-		/*
 		details summary {
 			transition-property: margin-block-end !important;
 		}
-		*/
 
-		summary:hover, details.open summary {
+		summary:hover, details.open>summary {
 			background-color: black;
 			
 		}
 		summary:hover, summary:hover h2, 
-		details.open summary, details.open summary h2 {
+		details.open>summary, details.open>summary h2 {
 			color: white !important;
 		}
 
 		details::details-content {
 			margin-inline-start: var(--left-pad);
 		}
-		
-		/*
+		details:has(details)::details-content {
+			margin-inline-start: 0;
+		}
+		details:has(details) details summary {
+			padding-inline-start: var(--left-pad);
+		}
 		details summary::after {
 			position: absolute;
 			top: 0;
 		}
-		*/
-		
-		/*
-		summary:hover h2::after, details.open summary h2::after {
+		details.open[name="sub-labels"]>summary {
+			margin-bottom: 0;
+		}
+		summary:hover h2::after, details.open>summary h2::after {
 			display: block;
 			--chevron-size: var(--pico-font-size);
 			width: var(--chevron-size);
@@ -278,16 +243,18 @@
 		summary {
 			position: relative;
 		}
-		*/
 
+		details {
+			/* width: 90%; */
+		}
 		p {
 			padding-left: 1em;
 		}
-
 		footer.mobile-footer {
-      display: none;
-    }
+			display: none;
+		}
     
+		/* @media (max-width: 1230px) { */
 		@media (max-width: 550px) {
 			:root {
 				--footer-height: 5rem;
@@ -348,32 +315,44 @@
 								<summary>
 									<h2>R&B Law Authorities</h2>
 								</summary>
-								<p>
-									R&B Law Authorities – The official legal team of Superior Labels.
-									A functioning law firm co-owned by Rice and Brawly,
-									providing legal services both in-lore and in practical gameplay situations.
-								</p>
+								<div class="outer">
+									<div class="inner">
+										<p>
+											R&B Law Authorities – The official legal team of Superior Labels.
+											A functioning law firm co-owned by Rice and Brawly,
+											providing legal services both in-lore and in practical gameplay situations.
+										</p>
+									</div>
+								</div>
 							</details>
 							<details name="hiraya">
 								<summary>
 									<h2>Hiraya Labs</h2>
 								</summary>
-								<p>
-									Hiraya Labs – A sub-label dedicated to innovation and automation.
-									Specializes in selling auto-farm goods, helping streamline community
-									farming operations with reliable, efficient tools.
-								</p>
+								<div class="outer">
+									<div class="inner">
+										<p>
+											Hiraya Labs – A sub-label dedicated to innovation and automation.
+											Specializes in selling auto-farm goods, helping streamline community
+											farming operations with reliable, efficient tools.
+										</p>
+									</div>
+								</div>
 							</details>
 							<details name="sari-sari">
 								<summary>
 									<h2>Seren Sari-Sari Store</h2>
 								</summary>
-								<p>
-									Seren Sari-Sari Store – A versatile general store owned by Superior Labels,
-									offering a wide range of high-quality kits and assorted goods.
-									Inspired by the Filipino sari-sari concept, it’s your one-stop shop for
-									everything essential and unexpected.
-								</p>
+								<div class="outer">
+									<div class="inner">
+										<p>
+											Seren Sari-Sari Store – A versatile general store owned by Superior Labels,
+											offering a wide range of high-quality kits and assorted goods.
+											Inspired by the Filipino sari-sari concept, it’s your one-stop shop for
+											everything essential and unexpected.
+										</p>
+									</div>
+								</div>
 							</details>
 						</div>
 					</div>
@@ -437,15 +416,20 @@
 	</body>
 	<script>
 		// https://stackoverflow.com/a/77889050
-		/*
+
 		let openEl = null
-    unstickTimer = null
+		let openSubEL = null
+    	unstickTimer = null
 		function closeEl(el) {
 			const details = el;
 			// If the details this summary is controlling is open:
 			if (details.open) {
+				console.log('closing', el)
 				// Stop the browser from closing it on summary click.
 				event.preventDefault();
+				if (openSubEL && openSubEL != details) {
+					closeEl(openSubEL)
+				}
 
 				// Wait for the transition to end before closing the detail.
 				details
@@ -455,9 +439,9 @@
 						() => {
 							if (details.open) {
 								details.open = false;
-                if (unstickTimer) {
-                  clearTimeout(unstickTimer)
-                }
+								if (unstickTimer) {
+									clearTimeout(unstickTimer)
+								}
 							}
 						},
 						{ once: true }
@@ -465,11 +449,21 @@
 	
 				// Remove the open class to play CSS transition.
 				details.classList.remove('open');
-        if (details == openEl) {
-          openEl = null
-        }
-      }
+				if (details == openEl) {
+					openEl = null
+				}
+				if (details == openSubEL) {
+					openSubEL = null
+				}
+			}
 		}
+
+		let detailsEls = document.querySelectorAll('details')
+		let subdetailEls = [...document.querySelectorAll('details details')]
+		let subLabelsEl = document.querySelector('details[name="sub-labels"]')
+		// detailsEls.filter()
+
+		console.log(subdetailEls)
 
 		document
 			.querySelectorAll('details').forEach(el => el
@@ -477,14 +471,23 @@
 				// When toggled open:
 				if (target.open) {
 					// Add class to play CSS transition.
-          if (openEl) {
-            closeEl(openEl)
-          }
+					let isOuterDetail = subdetailEls.indexOf(el) == -1
+					let isSubLabels = el == subLabelsEl
+					if (openSubEL) {
+						closeEl(openSubEL)
+					}
+					if (openEl && isOuterDetail) {
+						closeEl(openEl)
+					}
 					target.classList.add('open');
-          openEl = el
-          if (unstickTimer) {
-            clearTimeout(unstickTimer)
-          }
+					if (isOuterDetail) {
+						openEl = el
+					} else {
+						openSubEL = el
+					}
+					if (unstickTimer) {
+						clearTimeout(unstickTimer)
+					}
 				}
 			}));
 			
@@ -507,8 +510,6 @@
         }
         el.open = false
       }, TRANSITION*2 * 1000)
-    }, TRANSITION*2 * 1000);
-		*/
-		// > --transition
+    }, TRANSITION*2 * 1000); // > --transition
 	</script>
 </html>
