@@ -148,11 +148,13 @@
 		}
 
 		/* https://stackoverflow.com/a/77889050 */
+		/* preventing sub-labels from fully spanning
 		.outer {
 			display: grid;
 			grid-template-rows: 1fr;
 			overflow: hidden;
 		}
+		*/
 
 		[open] .outer {
 			animation: show var(--transition);
@@ -171,7 +173,6 @@
 		*/
 
 		.inner > details {
-			padding-inline-start: var(--left-pad);
 			font-family: 'Lora', serif;
 			font-weight: 400;
 			border: 2px solid rebeccapurple;
@@ -197,27 +198,36 @@
 			margin: 0;
 		}
 
-		details[name="sub-labels"] > .outer > .inner {
-			display: grid;
+		details[name="sub-labels"] details,
+		details[name="sub-labels"] summary {
+			margin-block-end: revert;
+		}
+
+		details[name="sub-labels"] {
+			box-sizing: border-box;
 		}
 
 		details summary {
 			transition-property: margin-block-end, color !important;
 			line-height: revert;
 		}
+
+		details summary::after {
+			content-visibility: hidden;
+		}
 		
 		/*
 		.outer {
 			display: grid;
-			grid-template-rows: 0fr;
 			overflow: hidden;
 			transition: grid-template-rows var(--transition);
 		}
-		*/
-
+		
 		.open > .outer {
 			grid-template-rows: 1fr;
 		}
+		*/
+		
 
 		/*
 		.inner {
