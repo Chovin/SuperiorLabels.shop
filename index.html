@@ -21,7 +21,8 @@
 			/* --pico-icon-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(136, 145, 164)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") */
 			--left-pad: 4.5vw;
 			/* --pico-h1-color: black; */
-			--pico-h2-color: black;
+			--primary-color: black;
+			--secondary-color: white;
 			--mobile-breakpoint: 550px;
 			--tablet-breakpoint: 1100px;
 			--laptop-breakpoint: 1500px;
@@ -32,6 +33,10 @@
 		*::before,
 		*::after {
 			box-sizing: border-box;
+			transition: color var(--transition), background var(--transition);
+		}
+		summary h2 {
+			transition: color .1s;
 		}
 
 		/* Prevent font size inflation */
@@ -39,12 +44,14 @@
 			-moz-text-size-adjust: none;
 			-webkit-text-size-adjust: none;
 			text-size-adjust: none;
+			background: var(--secondary-color);
 		}
 
 		/* Remove default margin in favour of better control in authored CSS */
 		body, h1, h2, h3, h4, p,
 		figure, blockquote, dl, dd {
 			margin-block-end: 0;
+			color: var(--primary-color)
 		}	
 
 		/* Inherit fonts for inputs and buttons */
@@ -73,6 +80,12 @@
 			font-display: fallback;
 		}
 
+		.logo-container {
+			display: flex;
+			flex-wrap: nowrap;
+			justify-content: center;
+		}
+
 		.logo-container, .fixed {
 			height: 100vh;
 		}
@@ -97,7 +110,7 @@
 		.h1-bg {
 			width: 100%;
 			/* height: 5em; */
-			background: black;
+			background: var(--primary-color);
 			display: flex;
 			align-items: center;
 			vertical-align: middle;
@@ -108,7 +121,7 @@
 			text-transform: uppercase;
 			font-family: 'Lora', serif;
 			font-weight: 100;
-			color: black;
+			color: var(--primary-color);
 			padding: 0.25em;
 			padding-inline-start: var(--left-pad);
 			margin: 0;
@@ -117,7 +130,7 @@
 			margin: 0;
 			text-wrap: nowrap;
 			margin-inline-end: 1rem;
-			color: white;
+			color: var(--secondary-color);
 			font-weight: 400;
 
 			font-size: clamp(
@@ -197,12 +210,12 @@
 		}
 
 		summary:hover, details.open>summary {
-			background-color: black;
+			background-color: var(--primary-color);
 			
 		}
 		summary:hover, summary:hover h2, 
 		details.open>summary, details.open>summary h2 {
-			color: white !important;
+			color: var(--secondary-color) !important;
 		}
 
 		details::details-content {
@@ -240,16 +253,18 @@
 			margin-right: calc(var(--chevron-size) / 2);
 			margin-inline-start: calc(var(--pico-spacing, var(--chevron-size)) * .5);
 			align-self: anchor-center;
-			transform: rotate(0deg);
-			background-image: var(--pico-icon-chevron);
-			background-position: right center;
-			background-size: var(--chevron-size) auto;
-			background-repeat: no-repeat;
+			transform: rotate(0deg) translate(0px, 0px);
+			background-color: var(--secondary-color);
+			-webkit-mask-image: var(--pico-icon-chevron);
+			mask-image: var(--pico-icon-chevron);
+			mask-size: var(--chevron-size) auto;
+			mask-repeat: no-repeat;
+			margin-top: 0.25rem;
 			content: "";
 			transition: transform var(--pico-transition);
 		}
 		summary:hover::after {
-			transform: rotate(180deg);
+			transform: rotate(180deg) translate(0px, 0.25rem);
 		}
 		summary {
 			position: relative;
@@ -350,7 +365,7 @@
 									</div>
 								</div>
 							</details>
-							<details name="sari-sari">
+							<details name="sss">
 								<summary>
 									<h2>Seren Sari-Sari Store</h2>
 								</summary>
@@ -416,13 +431,13 @@
       <div class="logo-container">
         <div class="fixed">
           <div class="center">
-            <img src="assets/sl.png" alt="Superior Labels Logo">
+            <img class="logo" src="assets/sl.png" alt="Superior Labels Logo">
           </div>
         </div>
       </div>
     </div>
 		<footer class="mobile-footer">
-			<img src="assets/sl.png" alt="Superior Labels Logo">
+			<img class="logo" src="assets/sl.png" alt="Superior Labels Logo">
 		</footer>
 	</body>
 	<script>
@@ -466,15 +481,13 @@
 				if (details == openSubEL) {
 					openSubEL = null
 				}
+				adjustTheme()
 			}
 		}
 
 		let detailsEls = document.querySelectorAll('details')
 		let subdetailEls = [...document.querySelectorAll('details details')]
 		let subLabelsEl = document.querySelector('details[name="sub-labels"]')
-		// detailsEls.filter()
-
-		console.log(subdetailEls)
 
 		document
 			.querySelectorAll('details').forEach(el => el
@@ -496,6 +509,7 @@
 					} else {
 						openSubEL = el
 					}
+					adjustTheme()
 					if (unstickTimer) {
 						clearTimeout(unstickTimer)
 					}
@@ -520,7 +534,45 @@
           return
         }
         el.open = false
+		adjustTheme()
       }, TRANSITION*2 * 1000)
     }, TRANSITION*2 * 1000); // > --transition
+
+	function adjustTheme() {
+		let choice = colors.default
+		if (openSubEL) {
+			choice = colors[openSubEL.name] || choice
+		}
+		let root = document.documentElement
+		root.style.setProperty('--primary-color', choice.primary);
+		root.style.setProperty('--secondary-color', choice.secondary);
+		Array.prototype.forEach.call(document.getElementsByClassName('logo'), el => {
+			el.src = choice.logo
+			console.log(choice.logo, el.src)
+		})
+	}
+
+	colors = {
+		default: {
+			primary: 'black',
+			secondary: 'white',
+			logo: 'assets/sl.png'
+		},
+		rblaw: {
+			primary: 'black',
+			secondary: 'white',
+			logo: 'assets/sl.png'
+		},
+		hiraya: {
+			primary: '#82DEE4',
+			secondary: '#071C1E',
+			logo: 'assets/HIRAYA_LAB_35.png'
+		},
+		sss: {
+			primary: '#343650',
+			secondary: '#F1F1F1',
+			logo: 'assets/SSS.png'
+		}
+	}
 	</script>
 </html>
