@@ -214,21 +214,32 @@
 		details:has(details) details summary {
 			padding-inline-start: var(--left-pad);
 		}
-		details summary::after {
+		/* details summary::after {
 			position: absolute;
 			top: 0;
-		}
+		} */
 		details.open[name="sub-labels"]>summary {
 			margin-bottom: 0;
 		}
-		summary:hover h2::after, details.open>summary h2::after {
+		summary {
+			display: flex;
+			width: 100%;
+		}
+		summary h2 {
+			flex-grow: 1;
+		}
+		summary::after, summary h2 {
+			--pico-font-size: 1.75rem;
+		}
+		summary:hover::after, details.open>summary::after {
 			display: block;
 			--chevron-size: var(--pico-font-size);
 			width: var(--chevron-size);
+			min-width: var(--chevron-size);
 			height: var(--chevron-size);
 			margin-right: calc(var(--chevron-size) / 2);
 			margin-inline-start: calc(var(--pico-spacing, var(--chevron-size)) * .5);
-			float: right;
+			align-self: anchor-center;
 			transform: rotate(0deg);
 			background-image: var(--pico-icon-chevron);
 			background-position: right center;
@@ -237,7 +248,7 @@
 			content: "";
 			transition: transform var(--pico-transition);
 		}
-		summary:hover h2::after {
+		summary:hover::after {
 			transform: rotate(180deg);
 		}
 		summary {
