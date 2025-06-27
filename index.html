@@ -282,6 +282,18 @@
 			display: none;
 		}
 
+		@media (max-width: 1140px) {
+			.grid {
+				grid-template-columns: 3fr 2fr;
+			}
+		}
+
+		@media (max-width: 872px) {
+			.grid {
+				grid-template-columns: 2fr 1fr;
+			}
+		}
+
 		@media (min-width: 1365px) {
 			details {
 				width: 90%;
@@ -292,9 +304,12 @@
 		}
     
 		/* @media (max-width: 1230px) { */
-		@media (max-width: 767px) {
+		@media (max-width: 774px) {
 			:root {
 				--footer-height: 5rem;
+			}
+			.grid {
+				grid-template-columns: 1fr;
 			}
 			.logo-container {
 				display: none;
