@@ -269,10 +269,6 @@
 		summary {
 			position: relative;
 		}
-
-		details {
-			/* width: 90%; */
-		}
 		p {
 			padding-left: 1em;
 		}
@@ -284,6 +280,15 @@
 		}
 		footer.mobile-footer {
 			display: none;
+		}
+
+		@media (min-width: 1365px) {
+			details {
+				width: 90%;
+			}
+			details details {
+				width: 100%;
+			}
 		}
     
 		/* @media (max-width: 1230px) { */
