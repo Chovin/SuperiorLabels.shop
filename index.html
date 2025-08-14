@@ -404,6 +404,11 @@
 				setTimeout(() => {
 					screen = document.getElementById("loading-screen")
 					screen.classList.add('fade')
+					setTimeout(() => {
+						// get rid of screen so we don't get sizing problems
+						screen.style="display: hidden"
+
+					}, 1500) // all animations over
 				}, 1000)
 			}, 2500) // gif length
 		}
