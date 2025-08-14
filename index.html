@@ -41,6 +41,7 @@
 
 		/* Prevent font size inflation */
 		html {
+			height: 100%;
 			-moz-text-size-adjust: none;
 			-webkit-text-size-adjust: none;
 			text-size-adjust: none;
@@ -88,7 +89,7 @@
 		
 		.fixed {
 			position: fixed;
-			height: 100vh;
+			height: 100svh;
 		}
 
 		.center {
@@ -314,7 +315,7 @@
 			font-size: .9rem;
 		}
 		section.page {
-			height: 100vh;
+			height: 100svh;
 			margin: 0;
 			padding: 0;
 			display: flex;
@@ -349,6 +350,9 @@
 			}
 			.grid {
 				grid-template-columns: 1fr;
+			}
+			summary:hover::after, details.open>summary::after {
+				margin-top: 0.5rem;
 			}
 			.logo-container, footer.desktop-footer {
 				display: none;
@@ -406,8 +410,7 @@
 					screen.classList.add('fade')
 					setTimeout(() => {
 						// get rid of screen so we don't get sizing problems
-						screen.style="display: hidden"
-
+						screen.style="display: none"
 					}, 1500) // all animations over
 				}, 1000)
 			}, 2500) // gif length
