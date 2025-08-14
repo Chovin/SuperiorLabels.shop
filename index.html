@@ -85,14 +85,11 @@
 			flex-wrap: nowrap;
 			justify-content: center;
 		}
-
-		.logo-container, .fixed {
+		
+		.fixed {
+			position: fixed;
 			height: 100vh;
 		}
-
-    .fixed {
-      position: fixed;
-    }
 
 		.center {
 			width: 100%;
@@ -138,6 +135,13 @@
 				12vw - 4.5rem,
 				3rem
 			);
+		}
+		a {
+			color: var(--primary-color);
+			text-decoration: underline var(--primary-color);
+		}
+		.grow {
+			flex-grow: 1;
 		}
 
 		@media (max-width: 550px) {
@@ -298,6 +302,24 @@
 		footer.mobile-footer {
 			display: none;
 		}
+		footer.desktop-footer {
+			padding: 0;
+			margin: 0 auto;
+			text-align: center;
+			position: relative;
+			bottom: 0;
+		}
+		footer span {
+			font-family: "Lora", sans-serif;
+			font-size: .9rem;
+		}
+		section.page {
+			height: 100vh;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			flex-direction: column;
+		}
 
 		@media (max-width: 1140px) {
 			.grid {
@@ -328,156 +350,212 @@
 			.grid {
 				grid-template-columns: 1fr;
 			}
-			.logo-container {
+			.logo-container, footer.desktop-footer {
 				display: none;
 			}
 			footer.mobile-footer {
-				display: block;
-				position: fixed;
+				display: flex;
 				bottom: 0;
 				height: var(--footer-height);
 				padding: 0;
 				width: 100%;
 			}
+			.mobile-footer .left {
+				display: flex;
+				flex-direction: column;
+				flex-grow: 1;
+				justify-content: center;
+				padding-left: 1rem;
+			}
 			footer img {
+				object-fit: contain;
 				height: var(--footer-height);
 				float: right;
 			}
 		}
+
+
+		.fade {
+			opacity: 0;
+			transition: 1.5s all;
+		}
+
+		#loading-screen {
+			display: flex;
+			justify-content: center;
+			position: absolute;
+			top:0;
+			left:0;
+			width: 100%;
+			height: 100%;
+			background-color: #fcfcfc;
+		}
+		#loading-logo {
+			max-width: 500px;
+			object-fit: contain;
+			padding: 7.5vw;
+		}
 	</style>
+	<script>
+		function loading_started() {
+			setTimeout(() => {
+				loading = document.getElementById("loading-logo")
+				loading.classList.add('fade')
+				setTimeout(() => {
+					screen = document.getElementById("loading-screen")
+					screen.classList.add('fade')
+				}, 1000)
+			}, 2500) // gif length
+		}
+	</script>
 </head>
 	<body>
-		<div class="grid">
-			<div class="content">
-				<div class="h1-bg">
-					<h1>Superior Labels</h1>
+		<section class="page">
+			<div class="grid grow">
+				<div class="content">
+					<div class="h1-bg">
+						<h1>Superior Labels</h1>
+					</div>
+					<details name="about-us">
+						<summary>
+							<h2>About Us</h2>
+						</summary>
+						<div class="outer">
+							<div class="inner">
+								<p>
+									The name "Superior" originates from the first letter of our founder’s 
+									name, Seren, and represents its literal meaning—a company that strives 
+									for excellence, setting high standards in commerce, services, and 
+									innovation. However, while we are labeled as Superior, we remain humble, 
+									always remembering that no matter how high we soar, we must keep our 
+									feet grounded.
+								</p>
+								<p>At Superior Labels, we provide exceptional trade, services, and 
+									opportunities, ensuring that our growth also uplifts the community. 
+									We believe in breaking norms, creating opportunities, and supporting 
+									others in their ambitions.
+								</p>
+							</div>
+						</div>
+					</details>
+					<details name="sub-labels">
+						<summary>
+							<h2>Sub-Labels</h2>
+						</summary>
+						<div class="outer">
+							<div class="inner">
+								<details name="rblaw">
+									<summary>
+										<h2>R&B Law Authorities</h2>
+									</summary>
+									<div class="outer">
+										<div class="inner">
+											<p>
+												R&B Law Authorities – The official legal team of Superior Labels.
+												A functioning law firm co-owned by Rice and Brawly,
+												providing legal services both in-lore and in practical gameplay situations.
+											</p>
+										</div>
+									</div>
+								</details>
+								<details name="hiraya">
+									<summary>
+										<h2>Hiraya Labs</h2>
+									</summary>
+									<div class="outer">
+										<div class="inner">
+											<p>
+												Hiraya Labs – A sub-label dedicated to innovation and automation.
+												Specializes in selling auto-farm goods, helping streamline community
+												farming operations with reliable, efficient tools.
+											</p>
+										</div>
+									</div>
+								</details>
+								<details name="sss">
+									<summary>
+										<h2>Seren Sari-Sari Store</h2>
+									</summary>
+									<div class="outer">
+										<div class="inner">
+											<p>
+												Seren Sari-Sari Store – A versatile general store owned by Superior Labels,
+												offering a wide range of high-quality kits and assorted goods.
+												Inspired by the Filipino sari-sari concept, it’s your one-stop shop for
+												everything essential and unexpected.
+											</p>
+										</div>
+									</div>
+								</details>
+							</div>
+						</div>
+					</details>
+					<details name="core-values">
+						<summary>
+							<h2>Core Values</h2>
+						</summary>
+						<div class="outer">
+							<div class="inner">
+								<p>
+									<b>Pioneering</b> - We challenge norms, take bold risks, and redefine what's 
+									possible in the Minecraft realm business.
+								</p>
+								<p>
+									<b>Synergy</b> - We actively seek opportunities to collaborate with like-minded companies
+									and businesses, creating greater value through combined efforts and shared goals.
+								</p>
+								<p>
+									<b>Serendipity</b> - Embracing unexpected opportunities, turning
+									chance encounters into meaningful success.
+								</p>
+							</div>
+						</div>
+					</details>
+					<details name="Contact-Us">
+						<summary>
+							<h2>Contact Us</h2>
+						</summary>
+						<div class="outer">
+							<div class="inner">
+								<p>
+									Want to get in contact with us? Send @Seren or @rose a dm on Discord or use the below contact form to send us a message.
+								</p>
+								<form id="contact-form" action="submit">
+									<label for="username">Discord Username</label>
+									<input type="text" name="username" id="username">
+									<label for="message">Message</label>
+									<textarea name="message" id="message"></textarea>
+									<button type="submit" name="action" id="submit">Submit</button>
+								</form>
+							</div>
+						</div>
+					</details>
 				</div>
-				<details name="about-us">
-					<summary>
-						<h2>About Us</h2>
-					</summary>
-					<div class="outer">
-						<div class="inner">
-							<p>
-								The name "Superior" originates from the first letter of our founder’s 
-								name, Seren, and represents its literal meaning—a company that strives 
-								for excellence, setting high standards in commerce, services, and 
-								innovation. However, while we are labeled as Superior, we remain humble, 
-								always remembering that no matter how high we soar, we must keep our 
-								feet grounded.
-							</p>
-							<p>At Superior Labels, we provide exceptional trade, services, and 
-								opportunities, ensuring that our growth also uplifts the community. 
-								We believe in breaking norms, creating opportunities, and supporting 
-								others in their ambitions.
-							</p>
+				<div class="logo-container">
+					<div class="fixed">
+						<div class="center">
+							<img class="logo" src="assets/sl.png" alt="Superior Labels Logo">
 						</div>
 					</div>
-				</details>
-				<details name="sub-labels">
-					<summary>
-						<h2>Sub-Labels</h2>
-					</summary>
-					<div class="outer">
-						<div class="inner">
-							<details name="rblaw">
-								<summary>
-									<h2>R&B Law Authorities</h2>
-								</summary>
-								<div class="outer">
-									<div class="inner">
-										<p>
-											R&B Law Authorities – The official legal team of Superior Labels.
-											A functioning law firm co-owned by Rice and Brawly,
-											providing legal services both in-lore and in practical gameplay situations.
-										</p>
-									</div>
-								</div>
-							</details>
-							<details name="hiraya">
-								<summary>
-									<h2>Hiraya Labs</h2>
-								</summary>
-								<div class="outer">
-									<div class="inner">
-										<p>
-											Hiraya Labs – A sub-label dedicated to innovation and automation.
-											Specializes in selling auto-farm goods, helping streamline community
-											farming operations with reliable, efficient tools.
-										</p>
-									</div>
-								</div>
-							</details>
-							<details name="sss">
-								<summary>
-									<h2>Seren Sari-Sari Store</h2>
-								</summary>
-								<div class="outer">
-									<div class="inner">
-										<p>
-											Seren Sari-Sari Store – A versatile general store owned by Superior Labels,
-											offering a wide range of high-quality kits and assorted goods.
-											Inspired by the Filipino sari-sari concept, it’s your one-stop shop for
-											everything essential and unexpected.
-										</p>
-									</div>
-								</div>
-							</details>
-						</div>
-					</div>
-				</details>
-				<details name="core-values">
-					<summary>
-						<h2>Core Values</h2>
-					</summary>
-					<div class="outer">
-						<div class="inner">
-							<p>
-								<b>Pioneering</b> - We challenge norms, take bold risks, and redefine what's 
-								possible in the Minecraft realm business.
-							</p>
-							<p>
-								<b>Synergy</b> - We actively seek opportunities to collaborate with like-minded companies
-								and businesses, creating greater value through combined efforts and shared goals.
-							</p>
-							<p>
-								<b>Serendipity</b> - Embracing unexpected opportunities, turning
-								chance encounters into meaningful success.
-							</p>
-						</div>
-					</div>
-				</details>
-				<details name="Contact-Us">
-					<summary>
-						<h2>Contact Us</h2>
-					</summary>
-					<div class="outer">
-						<div class="inner">
-							<p>
-								Want to get in contact with us? Send @Seren or @rose a dm on Discord or use the below contact form to send us a message.
-							</p>
-							<form id="contact-form" action="submit">
-								<label for="username">Discord Username</label>
-								<input type="text" name="username" id="username">
-								<label for="message">Message</label>
-								<textarea name="message" id="message"></textarea>
-								<button type="submit" name="action" id="submit">Submit</button>
-							</form>
-						</div>
-					</div>
-				</details>
+				</div>
 			</div>
-      <div class="logo-container">
-        <div class="fixed">
-          <div class="center">
-            <img class="logo" src="assets/sl.png" alt="Superior Labels Logo">
-          </div>
-        </div>
-      </div>
-    </div>
-		<footer class="mobile-footer">
-			<img class="logo" src="assets/sl.png" alt="Superior Labels Logo">
-		</footer>
+			<footer class="desktop-footer">
+				<span>Made with ❤️ for <a href="https://genesistherealm.com/" target="_blank">Genesis</a>.</span>
+				<span>Loading animation by New Florida</span>
+			</footer>
+			<footer class="mobile-footer">
+				<div class="left">
+					<span>Made with ❤️ for <a href="https://genesistherealm.com/" target="_blank">Genesis</a>.</span>
+					<span>Loading animation by New Florida</span>
+				</div>
+				<div class="right">
+					<img class="logo" src="assets/sl.png" alt="Superior Labels Logo">
+				</div>
+			</footer>
+			<section id="loading-screen">
+				<img id="loading-logo" src="assets/Superior_labels-optimize.gif" alt="loading logo" onload="loading_started()"></img>
+			</section>
+		</section>
 	</body>
 	<script>
 		const url = '68747470733a2f2f646973636f72642e636f6d2f6170692f776562686f6f6b732f313430353338333931333235373536363232392f51425737396a67752d484f7652684f43475a4358436e7059484c62505a6d6b6d3851365845745f467143577550472d61576a7677676e6e5039674d42724f49657a447a643f7468726561645f69643d31343035333831383530333339333434343436'
