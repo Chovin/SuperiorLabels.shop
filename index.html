@@ -146,7 +146,7 @@
 			}
 		}
 
-		.inner p {
+		.inner p, form {
 			font-family: 'Cinzel Decorative', serif;
 			font-weight: 400;
 			font-style: normal;
@@ -172,6 +172,12 @@
 		.inner {
 			min-height: 0;
 		} */
+
+		form button[type="submit"] {
+			border-radius: 0;
+			border: none;
+			background-color: var(--primary-color);
+		}
 
 		details > summary {
 			font-size: clamp(
@@ -272,6 +278,17 @@
 		p {
 			padding-left: 1em;
 		}
+		form {
+			padding: 1em;
+		}
+		input, textarea {
+			font-family: "Lora";
+			border-radius: 0;
+		}
+		input:focus, textarea:focus {
+			border: black 2px solid;
+		}
+		
 		.inner {
 			margin-bottom: 1rem;
 		}
@@ -437,19 +454,15 @@
 					<div class="outer">
 						<div class="inner">
 							<p>
-								The name "Superior" originates from the first letter of our founder’s 
-								name, Seren, and represents its literal meaning—a company that strives 
-								for excellence, setting high standards in commerce, services, and 
-								innovation. However, while we are labeled as Superior, we remain humble, 
-								always remembering that no matter how high we soar, we must keep our 
-								feet grounded.
+								Want to get in contact with us? Send @Seren or @rose a dm on Discord or use the below contact form to send us a message.
 							</p>
-							<p>
-								At Superior Labels, we provide exceptional trade, services, and 
-								opportunities, ensuring that our growth also uplifts the community. 
-								We believe in breaking norms, creating opportunities, and supporting 
-								others in their ambitions.
-							</p>
+							<form id="contact-form" action="submit">
+								<label for="username">Discord Username</label>
+								<input type="text" name="username" id="username">
+								<label for="message">Message</label>
+								<textarea name="message" id="message"></textarea>
+								<button type="submit" name="action" id="submit">Submit</button>
+							</form>
 						</div>
 					</div>
 				</details>
@@ -466,6 +479,54 @@
 			<img class="logo" src="assets/sl.png" alt="Superior Labels Logo">
 		</footer>
 	</body>
+	<script>
+		const url = '68747470733a2f2f646973636f72642e636f6d2f6170692f776562686f6f6b732f313430353338333931333235373536363232392f51425737396a67752d484f7652684f43475a4358436e7059484c62505a6d6b6d3851365845745f467143577550472d61576a7677676e6e5039674d42724f49657a447a643f7468726561645f69643d31343035333831383530333339333434343436'
+		decode = (s) => {
+			return s.split(/(\w\w)/g).filter(p => !!p).map(c => String.fromCharCode(parseInt(c, 16))).join("")
+		}
+		let timer;
+		document.getElementById('contact-form').addEventListener("submit", async (event) => {
+            event.preventDefault();
+            let username_e = document.getElementById('username')
+            let message_e = document.getElementById('message')
+            let username = username_e.value
+            let message = message_e.value
+			if (!message || !username || timer) {
+				return
+			}
+            username_e.value = ''
+            message_e.value = ''
+
+            await fetch(decode(url), {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: "Superior Labels",
+                    avatar_url: "https://media.discordapp.net/attachments/1405381850339344446/1405388045729140877/Screenshot_2025-08-14_at_1.00.19_PM.png?ex=689ea51c&is=689d539c&hm=30d3397e5ab3ae47ebf6a0f6beca8a85f95cb0a2fa76b305589971349f67fbc6&=",
+                    "embeds": [
+                        {
+                            "title": '@' + username,
+                            "description": message,
+                            "color": 16777215,
+                            "timestamp": new Date().toISOString()
+                        }
+                    ],
+                    "content": ""
+                })
+            })
+			let submitb = document.getElementById('submit')
+			submitb.innerText = "submitted"
+			submitb.style="background-color: #33cc55"
+
+			timer = setTimeout(() => {
+				if (timer) {
+					submitb.innerText = "submit"
+					submitb.style=""
+					timer == undefined
+				}
+			}, 750)
+        })
+	</script>
 	<script>
 		// https://stackoverflow.com/a/77889050
 
