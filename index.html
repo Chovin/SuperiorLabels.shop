@@ -510,6 +510,21 @@
 										</div>
 									</div>
 								</details>
+								<details name="rose">
+									<summary>
+										<h2>Ro-Se</h2>
+									</summary>
+									<div class="outer">
+										<div class="inner">
+											<p>
+												RO-SE is Superior Label’s monthly magazine, showcasing the standout members, 
+												groups, and projects of the Genesis community. Created and managed entirely by 
+												Seren and Rose, its name blends “Ro” and “Se” — a symbol of our teamwork. Each 
+												issue delivers high-quality visuals and stories that capture the spirit of our realm.
+											</p>
+										</div>
+									</div>
+								</details>
 							</div>
 						</div>
 					</details>
@@ -646,7 +661,6 @@
 			const details = el;
 			// If the details this summary is controlling is open:
 			if (details.open) {
-				console.log('closing', el)
 				// Stop the browser from closing it on summary click.
 				event.preventDefault();
 				if (openSubEL && openSubEL != details) {
@@ -744,7 +758,6 @@
 		root.style.setProperty('--secondary-color', choice.secondary);
 		Array.prototype.forEach.call(document.getElementsByClassName('logo'), el => {
 			el.src = choice.logo
-			console.log(choice.logo, el.src)
 		})
 	}
 
@@ -773,6 +786,11 @@
 			primary: '#16806A',
 			secondary: '#EDEDED',
 			logo: 'assets/sl-fb.png'
+		},
+		rose: {
+			primary: 'black',
+			secondary: 'white',
+			logo: 'assets/RO-SE.png'
 		}
 	}
 	</script>
